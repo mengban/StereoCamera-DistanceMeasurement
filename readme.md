@@ -1,13 +1,14 @@
 ### 需求:使用双目摄像头得出物体3D坐标，本质就是利用双目来得到深度信息。
+[github代码](https://github.com/mengban/StereoCamera-DistanceMeasurement/tree/master/code)
 
 #### 0 知识扫盲
 - [相机模型](https://docs.opencv.org/4.1.0/d9/d0c/group__calib3d.html)
 - [四大坐标关系及其关系](https://blog.csdn.net/waeceo/article/details/50580607)
-- []()
+
 
 #### 1 相机标定
 - Q1:用MATLAB标定还是opencv标定？
-- A1:两种我都试了。总结来说，直接影响标定结果的好坏的因素是图片质量，值图片质量较好的情况下，两者结果基本一样。
+- A1:两种我都试了。总结来说，直接影响标定结果的好坏的因素是图片质量，在图片质量较好的情况下，两者结果基本一样。
 
 - Q2:是两个相机一起标定还是单独标定?
 - A2:MATLAB 和 OPENCV中都有单目标定和双目标定(MATLAB版本>2014)的方式。题主采用的方案是opencv分开标， MATLAB一起标。opencv分开标的主要原因是利用opencv **cv2.stereoCalibrate()**标出的两相机间的RT矩阵实在偏差太大，所以采用了分开标定相机。而MATLAB计算的结果就相当好，示意图和我实际摆放的相机位置基本一样。
@@ -55,4 +56,17 @@ P1 和P2 之间只差一个平移矩阵。与我们实际摆放的位置不符�
 可以看出在3维坐标的计算上，三个轴3d坐标与实际值相差都很小，并且opencv标注产生的均方误差在三个轴均略优于MATLAB。
 
 >继续验证:
- 
+左相机视图:
+![](https://raw.githubusercontent.com/mengban/ImageHosting/master/cnblog/%E8%B7%9D%E7%A6%BB%E7%A4%BA%E6%84%8F%E5%9B%BE1.png)
+实物图:
+![](https://raw.githubusercontent.com/mengban/ImageHosting/master/cnblog/%E8%B7%9D%E7%A6%BB%E7%A4%BA%E6%84%8F%E5%9B%BE2.png)
+
+matlab标定给出的3d结果:
+![](https://raw.githubusercontent.com/mengban/ImageHosting/master/cnblog/%E8%B7%9D%E7%A6%BB%E7%A4%BA%E6%84%8F%E5%9B%BE-mat.png)
+
+opencv标定给出的3d结果:
+![](https://raw.githubusercontent.com/mengban/ImageHosting/master/cnblog/%E8%B7%9D%E7%A6%BB%E7%A4%BA%E6%84%8F%E5%9B%BE-opencv.png)
+(**结果比较接近，相差6mm。结果负值是坐标系原因。**)
+[github代码](https://github.com/mengban/StereoCamera-DistanceMeasurement/tree/master/code)
+
+
